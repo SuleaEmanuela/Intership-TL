@@ -38,7 +38,7 @@ namespace NUTestsEx1
         [TestCase("ALINA")]
         public void ShouldHandleShouting(string name)
         {
-            var exepctedResult = $"HELLO, {name} .";
+            var exepctedResult = $"HELLO, {name} !";
             var actualResult = Service.Greet(name);
             Assert.That(actualResult, Is.EqualTo(exepctedResult));
         }
@@ -49,6 +49,22 @@ namespace NUTestsEx1
         {
             string expectedResult = $"Hello, {names[0]} and {names[1]} .";
             string actualResult = Service.Greet(names);
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [TestCase("Stefan", "Emma","Andrei","Magda",ExpectedResult ="Hello, Stefan, Emma, Andrei and Magda .")]
+        public string ShouldHandleMoreNames(params string[] names)
+        {
+            return Service.Greet(names);
+        }
+
+        [Test]
+        [TestCase("Stefan","EMMA","George",ExpectedResult ="Hello, Stefan and George .AND HELLO, EMMA !")]
+        [TestCase("Ana","MARIA","STEFAN",ExpectedResult ="Hello, Ana .AND HELLO, MARIA AND STEFAN !")]
+        public string ShlouldHandleMixedNames(params string[] names)
+        {
+            return Service.Greet(names);
         }
     }
 }

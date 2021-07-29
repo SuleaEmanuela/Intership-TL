@@ -6,30 +6,46 @@ namespace Ex1
     public class GreetingService
     {
 #nullable enable
-        private string ParseName(string? name, out bool isShouting)
+        private bool IsUpper(string? name)
         {
-            isShouting = (name?.All(ch => char.IsUpper(ch))) is not null and true;
+            return (name?.All(ch => char.IsUpper(ch))) is not null and true;
+        }
+        private string ParseName(string? name)
+        {
             var replacement = (name is null) ? "my friend" : name;
-
             return replacement;
+        }
+
+        private string FormatNames(List<string> names)
+        {
+            string resultString = "";
+            for (int index = 0; index < names.Count - 1; index++)
+            {
+
+                resultString += ", " + ParseName(names[index]);
+            }
+
+            var lastSeparator = (names.Count == 1) ? ", " : " and ";
+            resultString += lastSeparator + ParseName(names[^1]);
+            return resultString;
         }
 
         public string Greet(params string[] names)
         {
-            var resultString = "Hello";
-            var endOfString = " .";
-
-            for(int index = 0; index < names.Length - 1; index++)
+            List<string> lowCaseNames = new();
+            List<string> upperCaseNames = new();
+            foreach (var name in names)
             {
-                resultString += ", " + ParseName(names[index], out bool _);
+                if (IsUpper(name))
+                    upperCaseNames.Add(name);
+                else
+                    lowCaseNames.Add(name);
             }
 
-            var lastSeparator = (names.Length == 1) ? ", " : " and ";
-            resultString += lastSeparator + ParseName(names[^1], out bool isShouting) + endOfString;
-
-            if (isShouting) resultString = resultString.ToUpper();
-
-            return resultString;
+            var lowCaseString = (lowCaseNames.Count > 0) ? "Hello" + FormatNames(lowCaseNames) + " ." : "";
+            var upperCaseString = (upperCaseNames.Count > 0) ? "HELLO" + FormatNames(upperCaseNames).ToUpper() + " !" : "";
+            var separator = (lowCaseNames.Count > 0 && upperCaseNames.Count > 0) ? "AND " : "";
+            return lowCaseString + separator + upperCaseString;
         }
 #nullable disable
     }
