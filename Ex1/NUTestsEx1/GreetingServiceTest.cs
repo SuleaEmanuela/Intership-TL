@@ -17,11 +17,18 @@ namespace NUTestsEx1
         public void ShouldGreet(string name)
         {
             var expectedResult = $"Hello, {name} .";
-            var actualResult =Service.Greet(name);
+            var actualResult = Service.Greet(name);
             Assert.That(actualResult, Is.EqualTo(expectedResult));
             
         }
 
+        [Test]
+        public void ShouldHandleNullNames()
+        {
+            var expectedResult = $"Hello, my friend .";
+            var actualResult = Service.Greet(null);
 
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
+        }
     }
 }

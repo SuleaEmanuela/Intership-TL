@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ex1
+﻿namespace Ex1
 {
     public class GreetingService
     {
-
-        public string Greet(string name)
+#nullable enable
+        public string Greet(string? name)
         {
-            return $"Hello, {name} .";
+            var replacement = (name is null) ? "my friend" : name;
+            return $"Hello, {replacement} .";
         }
+#nullable disable
     }
 }
