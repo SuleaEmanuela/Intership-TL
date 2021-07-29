@@ -30,5 +30,14 @@ namespace NUTestsEx1
 
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
+
+        [Test]
+        [TestCase("ALINA")]
+        public void ShouldHandleShouting(string name)
+        {
+            var exepctedResult = $"HELLO, {name} .";
+            var actualResult = Service.Greet(name);
+            Assert.That(actualResult, Is.EqualTo(exepctedResult));
+        }
     }
 }
