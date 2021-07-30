@@ -37,14 +37,9 @@ namespace Ex1
 
             foreach (var nameString in allNames)
             {
-                string[] namesInString = new string[1] { nameString };
+                string[] namesInString = ExtraxtNamesFromString(nameString);
 
-                if(nameString?.Contains(',') is not null and true)
-                {
-                    namesInString = nameString.Split(',', System.StringSplitOptions.RemoveEmptyEntries);
-                }
-
-                foreach(var name in namesInString)
+                foreach (var name in namesInString)
                 {
                     if (IsUpper(name))
                         upperCaseNames.Add(name);
@@ -52,6 +47,28 @@ namespace Ex1
                         lowCaseNames.Add(name);
                 }
             }
+        }
+
+        private static string[] ExtraxtNamesFromString(string? nameString)
+        {
+            string[] namesInString = new string[1] { nameString };
+            if( nameString is null)
+            {
+                return namesInString;
+            }
+
+            if (namesInString[0].StartsWith('\"') && namesInString[0].EndsWith('\"'))
+            {
+                namesInString[0] = nameString.Substring(1, nameString.Length - 2);
+                return namesInString;
+            }
+
+            if (namesInString[0].Contains(','))
+            {
+                namesInString = nameString.Split(',', System.StringSplitOptions.RemoveEmptyEntries);
+            }
+
+            return namesInString;
         }
 
         public string Greet(params string[] names)

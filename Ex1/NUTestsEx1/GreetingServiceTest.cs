@@ -75,5 +75,12 @@ namespace NUTestsEx1
         {
             return Service.Greet(names);
         }
+
+        [Test]
+        [TestCase("Ana","\"George,Dan\"",ExpectedResult ="Hello, Ana and George,Dan .")]
+        public string ShouldHandleCommaSurroundedInNames(params string[]names)
+        {
+            return Service.Greet(names);
+        }
     }
 }
