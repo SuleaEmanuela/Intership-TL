@@ -66,5 +66,14 @@ namespace NUTestsEx1
         {
             return Service.Greet(names);
         }
+
+        [Test]
+        [TestCase("Stefan,Emma", ExpectedResult = "Hello, Stefan and Emma .")]
+        [TestCase("Stefan,Emma", "ANA,MARIA", ExpectedResult = "Hello, Stefan and Emma .AND HELLO, ANA AND MARIA !")]
+        [TestCase("Stefan,Emma,Ana,Maria", ExpectedResult = "Hello, Stefan, Emma, Ana and Maria .")]
+        public string ShouldHandleMultipleNamesInASingleString(params string[] names)
+        {
+            return Service.Greet(names);
+        }
     }
 }

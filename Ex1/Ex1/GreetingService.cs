@@ -30,17 +30,34 @@ namespace Ex1
             return resultString;
         }
 
+        private void SortNames(string[] allNames, out List<string> lowCaseNames, out List<string> upperCaseNames)
+        {
+            lowCaseNames = new();
+            upperCaseNames = new();
+
+            foreach (var nameString in allNames)
+            {
+                string[] namesInString = new string[1] { nameString };
+
+                if(nameString?.Contains(',') is not null and true)
+                {
+                    namesInString = nameString.Split(',', System.StringSplitOptions.RemoveEmptyEntries);
+                }
+
+                foreach(var name in namesInString)
+                {
+                    if (IsUpper(name))
+                        upperCaseNames.Add(name);
+                    else
+                        lowCaseNames.Add(name);
+                }
+            }
+        }
+
         public string Greet(params string[] names)
         {
-            List<string> lowCaseNames = new();
-            List<string> upperCaseNames = new();
-            foreach (var name in names)
-            {
-                if (IsUpper(name))
-                    upperCaseNames.Add(name);
-                else
-                    lowCaseNames.Add(name);
-            }
+
+            SortNames(names, out List<string> lowCaseNames, out List<string> upperCaseNames);
 
             var lowCaseString = (lowCaseNames.Count > 0) ? "Hello" + FormatNames(lowCaseNames) + " ." : "";
             var upperCaseString = (upperCaseNames.Count > 0) ? "HELLO" + FormatNames(upperCaseNames).ToUpper() + " !" : "";
